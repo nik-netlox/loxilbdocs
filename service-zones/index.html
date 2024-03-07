@@ -8,7 +8,7 @@
         
         <link rel="canonical" href="https://loxilb-io.github.io/loxilbdocs/service-zones/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Service zones - loxilb v0.9.1</title>
+        <title>How-To - service-group zones - loxilb v0.9.1</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -42,9 +42,17 @@
                             <li class="navitem">
                                 <a href=".." class="nav-link">Home</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">How-To Guides <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../kube-loxilb/" class="dropdown-item">How-To - kube-loxilb</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">How-To - service-group zones</a>
+</li>
                                     
 <li>
     <a href="../run/" class="dropdown-item">How-To - build/run</a>
@@ -52,10 +60,6 @@
                                     
 <li>
     <a href="../cmd/" class="dropdown-item">How-To - configuration</a>
-</li>
-                                    
-<li>
-    <a href="../kube-loxilb/" class="dropdown-item">How-To - kube-loxilb</a>
 </li>
                                     
 <li>
@@ -206,6 +210,16 @@
                         </ul>
 
                     <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../kube-loxilb/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../run/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -224,7 +238,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#service-groups-with-zoning-in-loxilb" class="nav-link">Service-Groups with Zoning in loxilb</a>
+            <li class="nav-item" data-level="2"><a href="#service-group-zoning-in-loxilb" class="nav-link">Service-Group zoning in loxilb</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -243,7 +257,7 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h2 id="service-groups-with-zoning-in-loxilb">Service-Groups with Zoning in loxilb</h2>
+<h2 id="service-group-zoning-in-loxilb">Service-Group zoning in loxilb</h2>
 <p><a href="https://github.com/loxilb-io/kube-loxilb">kube-loxilb</a> is used to deploy loxilb with Kubernetes. By default a kube-loxilb instance does not differentiate the services in any way and uses a set-of loxilb instances to setup rules related to these services. But there are potential scenarios where grouping of services is necessary. It might be beneficial for increasing capacity, uptime and security of the cluster services.    </p>
 <h3 id="overall-topology">Overall topology</h3>
 <p>For implementing service-groups with zones, the overall topology including all components should be similar to the following :   </p>
