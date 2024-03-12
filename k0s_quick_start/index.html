@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="https://loxilb-io.github.io/loxilbdocs/quick_start_with_cilium/">
+        <link rel="canonical" href="https://loxilb-io.github.io/loxilbdocs/k0s_quick_start/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Quick start with cilium - loxilb v0.9.1</title>
+        <title>K0s quick start - loxilb v0.9.1</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -228,37 +228,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#loxilb-quick-start-guide-with-cilium" class="nav-link">LoxiLB Quick Start Guide with Cilium</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#install-loxilb-docker" class="nav-link">Install loxilb docker</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#setup-k3s-with-cilium" class="nav-link">Setup K3s with cilium</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#how-to-deploy-kube-loxilb" class="nav-link">How to deploy kube-loxilb ?</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#create-the-service" class="nav-link">Create the service</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#check-the-status" class="nav-link">Check the status</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="2"><a href="#connect-from-client" class="nav-link">Connect from client</a>
+            <li class="nav-item" data-level="2"><a href="#loxilb-quick-start-guide-with-k0skube-router" class="nav-link">LoxiLB Quick Start Guide with k0s/kube-router</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -267,56 +237,43 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h2 id="loxilb-quick-start-guide-with-cilium">LoxiLB Quick Start Guide with Cilium</h2>
-<p>This document will explain how to install a K3s cluster with cilium as a CNI and loxilb as an external load balancer.</p>
-<h3 id="pre-requisite">Pre-requisite</h3>
-<p><a href="https://docs.docker.com/engine/install/ubuntu/">Install</a> docker runtime to manage loxilb.   </p>
+<h2 id="loxilb-quick-start-guide-with-k0skube-router">LoxiLB Quick Start Guide with k0s/kube-router</h2>
+<p>This document will explain how to install a K0s cluster with its default kube-router based networking and loxilb as an external load balancer.   </p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p><a href="https://docs.docker.com/engine/install/ubuntu/">Install</a> docker runtime to manage loxilb.    </p>
 <h3 id="topology">Topology</h3>
-<p>For quickly bringing up loxilb with cilium CNI, we will be deploying all components in a single node :   </p>
+<p>For quickly bringing up loxilb with K0s/kube-router, we will be deploying all components in a single node :   </p>
 <p><img alt="loxilb topology" src="../photos/qs_single.png" /></p>
-<p>loxilb and cilium both uses ebpf technology for load balancing and implementing policies. So, to avoid the conflict we have to run them in separate network space. 
-This is reason we are going to run loxilb in a docker and use macvlan for the incoming traffic. Also, this is to mimic a topology close to cloud-hosted k8s where LB nodes run outside a cluster.</p>
-<h2 id="install-loxilb-docker">Install loxilb docker</h2>
-<pre><code>## Set promisc mode for mac-vlan to work
+<p>loxilb is run as a docker and will use macvlan for the incoming traffic. This is to mimic a topology close to cloud-hosted k8s where LB nodes run outside a cluster. loxilb can be used in more complex <a href="https://www.loxilb.io/post/k8s-nuances-of-in-cluster-external-service-lb-with-loxilb">in-cluster</a> mode as well, but not used here for simplicity.   </p>
+<h3 id="install-loxilb-docker">Install loxilb docker</h3>
+<pre><code>## Set underlying interface of the VM/cluster-node to promisc mode for mac-vlan to work
 sudo ifconfig eth1 promisc
 
+## Run loxilb
 sudo docker run -u root --cap-add SYS_ADMIN --restart unless-stopped --privileged --entrypoint /root/loxilb-io/loxilb/loxilb -dit -v /dev/log:/dev/log  --name loxilb ghcr.io/loxilb-io/loxilb:latest
 
 # Create mac-vlan on top of underlying eth1 interface
 sudo docker network create -d macvlan -o parent=eth1 --subnet 192.168.82.0/24   --gateway 192.168.82.1 --aux-address 'host=192.168.82.252' llbnet
 
 # Assign mac-vlan to loxilb docker with specified IP (which will be used as LB VIP)
+# Please note that this node should already have an IP assigned belonging to the same subnet on underlying interface
 sudo docker network connect llbnet loxilb --ip=192.168.82.100
 
-# Add iptables rule to allow traffic from source IP(192.168.82.1) to loxilb
+# Add iptables rule to allow traffic from source/host IP(192.168.82.1) to loxilb
 sudo iptables -A DOCKER -s 192.168.82.1 -j ACCEPT
 
 </code></pre>
-<h2 id="setup-k3s-with-cilium">Setup K3s with cilium</h2>
-<pre><code>#K3s installation
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC=&quot;--disable traefik --disable servicelb --disable-cloud-controller  \
---flannel-backend=none \
---disable-network-policy&quot; sh -
-
-#Install Cilium
-CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/master/stable.txt)
-CLI_ARCH=amd64
-if [ &quot;$(uname -m)&quot; = &quot;aarch64&quot; ]; then CLI_ARCH=arm64; fi
-curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
-sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
-sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
-rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
-mkdir -p ~/.kube/
-sudo cat /etc/rancher/k3s/k3s.yaml &gt; ~/.kube/config
-cilium install
-
-echo $MASTER_IP &gt; /vagrant/master-ip
-sudo cp /var/lib/rancher/k3s/server/node-token /vagrant/node-token
-sudo cp /etc/rancher/k3s/k3s.yaml /vagrant/k3s.yaml
-sudo sed -i -e &quot;s/127.0.0.1/${MASTER_IP}/g&quot; /vagrant/k3s.yaml
-
+<p>All the above steps related to docker setup can be further automated using docker-compose.   </p>
+<h3 id="setup-k0skube-router-in-single-node">Setup k0s/kube-router in single-node</h3>
+<pre><code>#K0s installation steps
+curl -sSLf https://get.k0s.sh | sudo sh
+sudo k0s install controller --single
+sudo k0s start
 </code></pre>
-<h2 id="how-to-deploy-kube-loxilb">How to deploy kube-loxilb ?</h2>
+<h3 id="check-k0s-status">Check k0s status</h3>
+<pre><code>sudo k0s status
+</code></pre>
+<h3 id="how-to-deploy-kube-loxilb">How to deploy kube-loxilb ?</h3>
 <p><a href="https://github.com/loxilb-io/kube-loxilb">kube-loxilb</a> is used to deploy loxilb with Kubernetes.</p>
 <pre><code>wget https://raw.githubusercontent.com/loxilb-io/kube-loxilb/main/manifest/ext-cluster/kube-loxilb.yaml
 </code></pre>
@@ -327,15 +284,15 @@ sudo sed -i -e &quot;s/127.0.0.1/${MASTER_IP}/g&quot; /vagrant/k3s.yaml
             - --setMode=1
 </code></pre>
 <p>In the above snippet, loxiURL uses docker interface IP of loxilb, which can be different for each setup.    </p>
-<p>Apply in k8s:</p>
-<pre><code>kubectl apply -f kube-loxilb.yaml
+<p>Apply in k0s:</p>
+<pre><code>$ sudo k0s kubectl apply -f kube-loxilb.yaml
 </code></pre>
-<h2 id="create-the-service">Create the service</h2>
-<pre><code>kubectl apply -f https://raw.githubusercontent.com/loxilb-io/loxilb/main/cicd/docker-k3s-cilium/tcp-svc-lb.yml
+<h3 id="create-the-service">Create the service</h3>
+<pre><code>kubectl apply -f https://raw.githubusercontent.com/loxilb-io/loxilb/main/cicd/docker-k0s-lb/tcp-svc-lb.yml
 </code></pre>
-<h2 id="check-the-status">Check the status</h2>
-<p>In k3s:</p>
-<pre><code>kubectl get svc
+<h3 id="check-the-status">Check the status</h3>
+<p>In k0s:</p>
+<pre><code>$ sudo k0s kubectl get svc
 NAME            TYPE           CLUSTER-IP      EXTERNAL-IP          PORT(S)           AGE
 kubernetes      ClusterIP      10.43.0.1       &lt;none&gt;               443/TCP           80m
 tcp-lb-onearm   LoadBalancer   10.43.183.123   llb-192.168.82.100   56002:30001/TCP   6m50s
@@ -346,7 +303,7 @@ tcp-lb-onearm   LoadBalancer   10.43.183.123   llb-192.168.82.100   56002:30001/
 |----------------|---------|-------|-------|-----------------------|------|-----|--------|-----------|-------|--------|--------|----------|
 | 192.168.82.100 |         | 56002 | tcp   | default_tcp-lb-onearm |    0 | rr  | onearm | 10.0.2.15 | 30001 |      1 | active | 12:880   |
 </code></pre>
-<h2 id="connect-from-client">Connect from client</h2>
+<h3 id="connect-from-hostclient">Connect from host/client</h3>
 <pre><code>$ curl http://192.168.82.100:56002
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -373,10 +330,11 @@ Commercial support is available at
 &lt;/html&gt;
 
 </code></pre>
-<p>All of the above steps are also available as part of loxilb CICD workflow. Follow the steps below to replicate the above:</p>
-<pre><code>$ cd cicd/docker-k3s-cilium/
+<p>All of the above steps are also available as part of loxilb CICD workflow. Follow the steps below to replicate the above (please note that you will need <a href="https://developer.hashicorp.com/vagrant/docs/installation">vagrant tool</a> installed to run:</p>
+<pre><code>$ git clone https://github.com/loxilb-io/loxilb.git
+$ cd cicd/docker-k0s-lb/
 
-# To setup the single node k3s setup with cilium as CNI and loxilb as external load balancer
+# To setup the single node k0s setup with kube-router networking and loxilb as external load balancer
 $ ./config.sh
 
 # To validate the results
