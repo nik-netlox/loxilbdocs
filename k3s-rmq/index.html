@@ -276,7 +276,7 @@ Looking at the left side of the image, you will notice the traffic flow of the p
 loxilb <b><i>"service-proxy"</i></b> mode works with Flannel and kube-proxy in IPVS mode. It simplifies all the IPVS rules and injects them in it's in-kernel eBPF data-path. Traffic will reach at the interface, will be processed by eBPF and sent directly to the pod or to the other node, bypassing all the layers of Linux networking. This way, all the services, be it External, NodePort or ClusterIP, can be managed through LoxiLB.</p>
 <h3 id="topology">Topology</h3>
 <p>For quickly bringing up loxilb in-cluster and K3s, we will be deploying a 4 nodes k3s cluster :   </p>
-<p><img alt="loxilb topology" src="../photos/loxilb-incluster.png" /></p>
+<p><img alt="loxilb topology" src="../photos/service-proxy-topo.png" /></p>
 <p>loxilb and kube-loxilb components run as pods managed by kubernetes  in this scenario.</p>
 <h2 id="setup-k3s">Setup K3s</h2>
 <h3 id="configure-master-node">Configure Master node</h3>
