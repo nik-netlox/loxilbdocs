@@ -2372,15 +2372,11 @@ kube-system       loxilb-lb-5m85p                             1/1     Running   
 <span class="w">  </span><span class="nt">ipAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">123.123.123.2</span>
 <span class="w">  </span><span class="nt">remoteAs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65123</span>
 <span class="w">  </span><span class="nt">remotePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">179</span>
-</code></pre></div></p>
-<ol>
-<li>Apply CRD to add a new BGP Peer   </li>
-</ol>
-<div class="highlight"><pre><span></span><code>kubectl apply -f bgp-peer.yaml
 </code></pre></div>
-<ol>
-<li>Verify the applied CRD   </li>
-</ol>
+3. Apply CRD to add a new BGP Peer   </p>
+<p><div class="highlight"><pre><span></span><code>kubectl apply -f bgp-peer.yaml
+</code></pre></div>
+4. Verify the applied CRD   </p>
 <p>You can check it in two ways. The first one can be checked through loxicmd(in loxilb container), and the second one can be checked through kubectl.  <br />
 <div class="highlight"><pre><span></span><code># loxicmd
 kubectl exec -it {loxilb} -n kube-system -- loxicmd get bgpneigh 
