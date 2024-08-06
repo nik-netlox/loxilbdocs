@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.30">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
     
     
       
@@ -1397,9 +1397,27 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#095-jul-2024-planned" class="md-nav__link">
+  <a href="#095-jul-2024" class="md-nav__link">
     <span class="md-ellipsis">
-      0.9.5 (Jul, 2024) - Planned
+      0.9.5 (Jul, 2024)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#096-aug-2024" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.9.6 (Aug, 2024)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#097-oct-2024-planned" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.9.7 (Oct, 2024) Planned
     </span>
   </a>
   
@@ -1939,9 +1957,27 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#095-jul-2024-planned" class="md-nav__link">
+  <a href="#095-jul-2024" class="md-nav__link">
     <span class="md-ellipsis">
-      0.9.5 (Jul, 2024) - Planned
+      0.9.5 (Jul, 2024)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#096-aug-2024" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.9.6 (Aug, 2024)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#097-oct-2024-planned" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.9.7 (Oct, 2024) Planned
     </span>
   </a>
   
@@ -2068,14 +2104,14 @@
 <li>
 <p><strong>Functional Features</strong>:</p>
 <ul>
-<li>Kube-proxy replacement Support    </li>
+<li>Kube-proxy replacement support    </li>
 <li>IPVS compatibility mode    </li>
 <li>Master-plane HA support   </li>
 <li>BFD and GARP support for Hitless HA    </li>
 <li>Enhancements for Multus support    </li>
-<li>SCTP multi-homing end-to-end Support    </li>
-<li>Cloud Availability zone(s) Support    </li>
-<li>Redhat9 and Ubuntu24 Support   </li>
+<li>SCTP multi-homing end-to-end support    </li>
+<li>Cloud Availability zone(s) support    </li>
+<li>Redhat9 and Ubuntu24 support   </li>
 <li>Support for upto Linux Kernel 6.8    </li>
 <li>Full Support for Oracle OCI      </li>
 <li>SockAddr eBPF for LocalVIP access   </li>
@@ -2096,9 +2132,9 @@
 <p><strong>kube-loxilb Support</strong>: </p>
 <ul>
 <li>Kubernetes 1.29   </li>
-<li>BGP (auto) Mesh Support    </li>
+<li>BGP (auto) Mesh support    </li>
 <li>CRD for BGP peers    </li>
-<li>Kubernetes GW-API Support   </li>
+<li>Kubernetes GWAPI support   </li>
 </ul>
 </li>
 <li>
@@ -2110,30 +2146,73 @@
 </ul>
 </li>
 </ul>
-<h2 id="095-jul-2024-planned">0.9.5 (Jul, 2024) - Planned</h2>
+<h2 id="095-jul-2024">0.9.5 (Jul, 2024)</h2>
 <ul>
 <li>
 <p><strong>Functional Features</strong>:</p>
 <ul>
-<li>SRv6 support  </li>
-<li>Rolling upgrades   </li>
-<li>L7 (Transparent) proxy   </li>
+<li>L7 (Transparent) proxy</li>
 <li>HTTPS termination  </li>
-<li>URL Filtering       </li>
-<li>DNS caching   </li>
-<li>Wireguard Support  </li>
-<li>SIP protocol Support   </li>
-<li>Policy based SNAT    </li>
-<li>Kubernetes vCluster Support</li>
-<li>Rootless Container Support   </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/718">Native eBPF implementation for Policy based IP Masquerade/SNAT</a>      </li>
+<li>Kubernetes vCluster support   </li>
+<li>E2E SCTP multi-homing support with Multus   </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/681">Multi-AZ/Region hitless HA support for AWS/EKS</a>   </li>
+<li><a href="https://dev.to/nikhilmalik/5g-service-communication-proxy-with-loxilb-4242">Service communication proxy support for Telco deployments</a>      </li>
 </ul>
 </li>
 <li>
-<p><strong>kube-loxilb Support</strong>: </p>
+<p><strong>Kubernetes Support</strong>: </p>
 <ul>
-<li>Kubernetes 1.30        </li>
-<li>Multi-cluster support   </li>
-<li>CRD for BGP policies   </li>
+<li>Kubernetes 1.30   </li>
+<li><a href="https://github.com/loxilb-io/loxilbdocs/blob/main/docs/k8s_bgp_policy_crd.md">CRD for BGP policies</a>        </li>
+</ul>
+</li>
+</ul>
+<h2 id="096-aug-2024">0.9.6 (Aug, 2024)</h2>
+<ul>
+<li>
+<p><strong>Functional Features</strong>:</p>
+<ul>
+<li><a href="https://github.com/loxilb-io/loxilb/pull/694">Support for any host onearm LB rule</a>        </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/48">HTTP 2.0 parser</a>     </li>
+<li><a href="https://www.loxilb.io/post/ngap-load-balancing-with-loxilb">NGAP protocol parser</a>       </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/730">ECMP Load-balancing support</a>       </li>
+<li><a href="https://github.com/loxilb-io/loxilb/discussions/654">Non-privileged Container support</a></li>
+<li><a href="https://github.com/loxilb-io/loxilbdocs/blob/main/docs/eks-external.md#restricting-loxilb-service-for-a-local-zone-node-group">AWS Local-Zone support</a>    </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/697">Multi-Cloud HA support (AWS+GCP)</a>   </li>
+<li>Updated CICD workflows     </li>
+</ul>
+</li>
+<li>
+<p><strong>Kubernetes Support</strong>: </p>
+<ul>
+<li><a href="https://github.com/loxilb-io/loxilbdocs/blob/main/docs/loxilb-ingress.md">Ingress Manager support</a>       </li>
+<li>Enhanced GW API support   </li>
+</ul>
+</li>
+</ul>
+<h2 id="097-oct-2024-planned">0.9.7 (Oct, 2024)   Planned</h2>
+<ul>
+<li>
+<p><strong>Functional Features</strong>:</p>
+<ul>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/14">SRv6 implementation</a>         </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/312">Rolling upgrades</a>        </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/133">URL Filtering</a>            </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/67">Wireguard support (ingress + egress)</a>        </li>
+<li><a href="https://github.com/loxilb-io/loxilb-ebpf/issues/45">SIP protocol support</a>       </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/750">Sockmap support for SCTP</a>     </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/675">Support for proxy protocol v2</a>    </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/670">SYNProxy support</a>    </li>
+<li>IPSec service mesh for Telco workloads  (ingress + egress)     </li>
+</ul>
+</li>
+<li>
+<p><strong>Kubernetes Support</strong>: </p>
+<ul>
+<li>Kubernetes 1.31   </li>
+<li><a href="https://github.com/loxilb-io/loxilb/issues/371">Multi-cluster support</a>    </li>
+<li><a href="https://github.com/loxilb-io/kube-loxilb/issues/158">Support for Cilium and LoxiLB in-cluster support</a>    </li>
 <li>Kubernetes network policy support    </li>
 </ul>
 </li>

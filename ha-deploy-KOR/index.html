@@ -8,13 +8,9 @@
       
       
       
-        <link rel="canonical" href="https://loxilb-io.github.io/loxilbdocs/ext-ep/">
+        <link rel="canonical" href="https://loxilb-io.github.io/loxilbdocs/ha-deploy-KOR/">
       
       
-        <link rel="prev" href="../service-zones/">
-      
-      
-        <link rel="next" href="../k3s-multi-master/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -22,7 +18,7 @@
     
     
       
-        <title>How-To - access end-points outside K8s - LoxiLB</title>
+        <title>loxilb 고가용성(HA) 배포 방법 - LoxiLB</title>
       
     
     
@@ -76,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#what-is-service" class="md-skip">
+        <a href="#loxilb-ha" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              How-To - access end-points outside K8s
+              loxilb 고가용성(HA) 배포 방법
             
           </span>
         </div>
@@ -851,10 +847,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -867,11 +861,11 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -885,7 +879,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Advanced Guides
@@ -917,28 +911,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    How-To - access end-points outside K8s
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../ext-ep/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -947,53 +923,6 @@
   
 
       </a>
-      
-        
-
-  
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-service" class="md-nav__link">
-    <span class="md-ellipsis">
-      What is Service?
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-an-endpoint" class="md-nav__link">
-    <span class="md-ellipsis">
-      What is an Endpoint?
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#service-with-external-endpoint" class="md-nav__link">
-    <span class="md-ellipsis">
-      Service with External Endpoint
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1871,6 +1800,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1879,27 +1810,459 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-service" class="md-nav__link">
+  <a href="#1-flat-l2-" class="md-nav__link">
     <span class="md-ellipsis">
-      What is Service?
+      시나리오 1 - Flat L2 네트워킹 (액티브-백업)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="시나리오 1 - Flat L2 네트워킹 (액티브-백업)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      설정
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-an-endpoint" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      What is an Endpoint?
+      적합한 사용 사례
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-loxilb" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube-loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kube-loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      구성 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loxilb" class="md-nav__link">
+    <span class="md-ellipsis">
+      loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      구성 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fail-over" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fail-Over
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#service-with-external-endpoint" class="md-nav__link">
+  <a href="#2-l3-bgp-" class="md-nav__link">
     <span class="md-ellipsis">
-      Service with External Endpoint
+      시나리오 2 - L3 네트워크 (BGP를 사용하는 액티브-백업 모드)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="시나리오 2 - L3 네트워크 (BGP를 사용하는 액티브-백업 모드)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      설정
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      적합한 사용 사례
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-loxilb_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube-loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kube-loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      구성 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loxilb_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      구성 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fail-over_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fail-over
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-l3-bgp-ecmp-" class="md-nav__link">
+    <span class="md-ellipsis">
+      시나리오 3 - L3 네트워크 (BGP ECMP를 사용하는 액티브-액티브)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="시나리오 3 - L3 네트워크 (BGP ECMP를 사용하는 액티브-액티브)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      설정
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      적합한 사용 사례
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-loxilb_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube-loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kube-loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      구성 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loxilb_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      구성 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fail-over_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fail-over
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-" class="md-nav__link">
+    <span class="md-ellipsis">
+      시나리오 4 - 연결 동기화를 사용하는 액티브-백업
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="시나리오 4 - 연결 동기화를 사용하는 액티브-백업">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      설정
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      적합한 사용 사례
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-loxilb_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube-loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kube-loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      구성 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loxilb_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      실행 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fail-over_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fail-over
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-fail-over-" class="md-nav__link">
+    <span class="md-ellipsis">
+      시나리오 5 - 빠른 Fail-over 감지를 사용하는 액티브-백업
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="시나리오 5 - 빠른 Fail-over 감지를 사용하는 액티브-백업">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      설정
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      적합한 사용 사례
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kube-loxilb_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      kube-loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kube-loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      구성 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loxilb_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      loxilb의 역할과 책임:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="loxilb의 역할과 책임:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      실행 옵션
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fail-over_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fail-over
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      참고:
     </span>
   </a>
   
@@ -1923,62 +2286,393 @@
   
 
 
-  <h1>How-To - access end-points outside K8s</h1>
+<h1 id="loxilb-ha">loxilb 고가용성(HA) 배포 방법</h1>
+<p>이 문서에서는 loxilb를 고가용성(HA)으로 배포하는 다양한 시나리오에 대해 설명합니다. 이 페이지를 계속하기 전에  <a href="https://loxilb-io.github.io/loxilbdocs/kube-loxilb/">kube-loxilb</a>와 loxilb가 지원하는 다양한 <a href="https://github.com/loxilb-io/loxilbdocs/blob/main/docs/nat.md">NAT 모드</a>에 대한 기본적인 이해를 가지는 것이 좋습니다. loxilb는 아키텍처 선택에 따라 인-클러스터 또는 Kubernetes 클러스터 외부에서 실행할 수 있습니다. 이 문서에서는 인-클러스터 내 배포를 가정하지만, 유사한 구성이 외부 구성 에서도 동일하게 가능합니다.</p>
+<ul>
+<li><a href="#scenario-1----flat-l2-networking-active-backup">시나리오 1 - Flat L2 네트워킹 (액티브-백업)</a></li>
+<li><a href="#scenario-2----l3-network-active-backup-mode-using-bgp">시나리오 2 - L3 네트워크 (BGP를 사용하는 액티브-백업 모드)</a></li>
+<li><a href="#scenario-3----l3-network-active-active-with-bgp-ecmp">시나리오 3 - L3 네트워크 (BGP ECMP를 사용하는 액티브-액티브)</a></li>
+<li><a href="#scenario-4----active-backup-with-connection-sync">시나리오 4 - 연결 동기화를 사용하는 액티브-백업</a></li>
+<li><a href="#scenario-5----active-backup-with-fast-failover-detection">시나리오 5 - 빠른 Fail-over 감지를 사용하는 액티브-백업(BFD)</a></li>
+</ul>
+<h2 id="1-flat-l2-">시나리오 1 - Flat L2 네트워킹 (액티브-백업)</h2>
+<h3 id="_1">설정</h3>
+<hr />
+<p>이 배포 시나리오에서는 Kubernetes와 loxilb가 다음과 같이 설정됩니다:</p>
+<p><img alt="설정" src="../photos/loxilb-k8s-arch-LoxiLB-HA-L2-1.drawio.svg" /></p>
+<p>Kubernetes는 2개의 마스터 노드와 2개의 워커 노드로 구성된 클러스터를 사용하며, 모든 노드는 동일한 192.168.80.0/24 서브넷을 사용합니다. 이 시나리오에서는 loxilb가 모든 마스터 노드에서 DaemonSet으로 배포됩니다. 그리고 kube-loxilb는 Deployment로 배포됩니다.</p>
+<h3 id="_2">적합한 사용 사례</h3>
+<ol>
+<li>클라이언트와 서비스가 동일한 서브넷에 있어야 하는 경우.</li>
+<li>엔드포인트가 동일한 서브넷에 있거나 없을 수 있는 경우.</li>
+<li>간단한 배포를 원하는 경우.</li>
+</ol>
+<h3 id="kube-loxilb">kube-loxilb의 역할과 책임:</h3>
+<ul>
+<li>로컬 서브넷에서 CIDR 선택.</li>
+<li>SetRoles 옵션을 선택하여 활성 loxilb pod를 선택할 수 있도록 합니다.</li>
+<li>loxilb의 상태를 모니터링하고 Fail-over 시 새로운 마스터를 선출합니다.</li>
+<li>엔드포인트를 향한 One-arm 서비스 모드에서 loxilb를 설정합니다.</li>
+</ul>
+<h4 id="_3">구성 옵션</h4>
+<div class="highlight"><pre><span></span><code> containers:
+      - name: kube-loxilb
+        image: ghcr.io/loxilb-io/kube-loxilb:latest
+        imagePullPolicy: Always
+        command:
+        - /bin/kube-loxilb
+        args:
+        ....
+        ....
+        - --externalCIDR=192.168.80.200/24
+        - --setRoles=0.0.0.0
+        - --setLBMode=1
+</code></pre></div>
+<ul>
+<li><b>"--externalCIDR=192.168.80.200/24" -</b> svc의 외부 서비스 IP는 externalCIDR 범위에서 선택됩니다. 이 시나리오에서는 클라이언트, svc 및 클러스터가 동일한 서브넷에 있습니다.</li>
+<li><b>"--setRoles=0.0.0.0" -</b> 이 옵션을 사용하면 kube-loxilb가 loxilb 인스턴스 중에서 활성-백업을 선택하고 svc IP를 활성 loxilb 노드에 구성할 수 있습니다.</li>
+<li><b>"--setLBMode=1" -</b> 이 옵션을 사용하면 kube-loxilb가 엔드포인트를 향한 One-arm 모드에서 svc를 구성할 수 있습니다.</li>
+</ul>
+<p>샘플 kube-loxilb.yaml은 <a href="https://github.com/loxilb-io/kube-loxilb/blob/main/manifest/in-cluster/kube-loxilb.yaml">여기</a>에서 찾을 수 있습니다.</p>
+<h3 id="loxilb">loxilb의 역할과 책임:</h3>
+<ul>
+<li>svc로 향하는 외부 트래픽을 추적하고 엔드포인트로 전달합니다.</li>
+<li>엔드포인트의 상태를 모니터링하고 활성 엔드포인트를 선택합니다(구성된 경우).</li>
+</ul>
+<h4 id="_4">구성 옵션</h4>
+<div class="highlight"><pre><span></span><code> containers:
+      - name: loxilb-app
+        image: &quot;ghcr.io/loxilb-io/loxilb:latest&quot;
+        imagePullPolicy: Always
+        command: [ &quot;/root/loxilb-io/loxilb/loxilb&quot;, &quot;--egr-hooks&quot;, &quot;--blacklist=cni[0-9a-z]|veth.|flannel.&quot; ]
+        ports:
+        - containerPort: 11111
+        - containerPort: 179
+        - containerPort: 50051
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - SYS_ADMIN
+</code></pre></div>
+<ul>
+<li>
+<p><b>"--egr-hooks" -</b> 워크로드가 마스터 노드에 스케줄링될 수 있는 경우 필요합니다. 워커 노드로 워크로드 스케줄링을 관리하는 경우 해당 변수를 설정할 필요는 없습니다.</p>
+</li>
+<li>
+<p><b>"--blacklist=cni[0-9a-z]|veth.|flannel." -</b> 클러스터 내 모드에서 실행하는 경우 필수입니다. loxilb는 모든 인터페이스에 ebpf 프로그램을 부착하지만 기본 네임스페이스에서 실행 중이므로 모든 인터페이스(CNI 인터페이스 포함)가 노출되고 loxilb는 이러한 인터페이스에 ebpf 프로그램을 부착하게 됩니다. 이는 원하는 바가 아니므로 사용자는 이러한 인터페이스를 제외하는 정규 표현식을 언급해야 합니다. 주어진 예제의 정규 표현식은 flannel 인터페이스를 제외합니다. "--blacklist=cali.|tunl.|vxlan[.]calico|veth.|cni[0-9a-z]" 정규 표현식은 calico CNI와 함께 사용해야 합니다.</p>
+</li>
+</ul>
+<p>샘플 loxilb.yaml은 <a href="https://github.com/loxilb-io/kube-loxilb/blob/main/manifest/in-cluster/loxilb.yaml">여기</a>에서 찾을 수 있습니다.</p>
+<h3 id="fail-over">Fail-Over</h3>
+<p>이 다이어그램은 Fail-over 시나리오를 설명합니다:</p>
+<p><img alt="설정" src="../photos/loxilb-k8s-arch-LoxiLB-HA-L2-2.drawio.svg" /></p>
+<p>kube-loxilb는 loxilb의 상태를 지속적으로 모니터링합니다. 장애가 발생하면 loxilb의 상태 변경을 감지하고 사용 가능한  loxilb pod 풀에서 새로운 “활성”을 할당합니다. 새로운 pod는 이전에 다른 loxilb pod에 할당된 svcIP를 상속받아 서비스가 새롭게 활성화된 loxilb pod에 의해 제공됩니다.</p>
+<h2 id="2-l3-bgp-">시나리오 2 - L3 네트워크 (BGP를 사용하는 액티브-백업 모드)</h2>
+<h3 id="_5">설정</h3>
+<hr />
+<p>이 배포 시나리오에서는 Kubernetes와 loxilb가 다음과 같이 설정됩니다:</p>
+<p><img alt="설정" src="../photos/loxilb-k8s-arch-LoxiLB-HA-L3-1.drawio.svg" /></p>
+<p>Kubernetes는 2개의 마스터 노드와 2개의 워커 노드로 구성된 클러스터를 사용하며, 모든 노드는 동일한 192.168.80.0/24 서브넷을 사용합니다. SVC는 클러스터/로컬 서브넷이 아닌 외부 IP를 가집니다.
+이 시나리오에서는 loxilb가 모든 마스터 노드에서 DaemonSet으로 배포됩니다.
+그리고 kube-loxilb는 Deployment로 배포됩니다.</p>
+<h3 id="_6">적합한 사용 사례</h3>
+<ol>
+<li>클라이언트와 클러스터가 다른 서브넷에 있는 경우.</li>
+<li>클라이언트와 svc VIP가 다른 서브넷에 있어야 하는 경우(클러스터 엔드포인트도 다른 네트워크에 있을 수 있음).</li>
+<li>클라우드 배포에 이상적입니다.</li>
+</ol>
+<h3 id="kube-loxilb_1">kube-loxilb의 역할과 책임:</h3>
+<ul>
+<li>다른 서브넷에서 CIDR을 선택합니다.</li>
+<li>SetRoles 옵션을 선택하여 활성 loxilb pod를 선택할 수 있도록 합니다.</li>
+<li>loxilb의 상태를 모니터링하고 Fail-over 시 새로운 마스터를 선출합니다.</li>
+<li>loxilb Pod 간의 BGP 피어링 프로비저닝을 자동화합니다.</li>
+<li>엔드포인트를 향한 One-arm 서비스 모드에서 loxilb를 설정합니다.</li>
+</ul>
+<h4 id="_7">구성 옵션</h4>
+<p><div class="highlight"><pre><span></span><code> containers:
+      - name: kube-loxilb
+        image: ghcr.io/loxilb-io/kube-loxilb:latest
+        imagePullPolicy: Always
+        command:
+        - /bin/kube-loxilb
+        args:
+        ....
+        ....
+        - --externalCIDR=123.123.123.1/24
+        - --setRoles=0.0.0.0
+        - --setLBMode=1
+        - --setBGP=65100
+        - --extBGPPeers=50.50.50.1:65101
+</code></pre></div>
+  *  <b>"--externalCIDR=123.123.123.1/24" -</b> svc의 외부 서비스 IP는 externalCIDR 범위에서 선택됩니다. 이 시나리오에서는 클라이언트, svc 및 클러스터가 모두 다른 서브넷에 있습니다.
+  *  <b>"--setRoles=0.0.0.0" -</b> 이 옵션을 사용하면 kube-loxilb가 loxilb 인스턴스 중에서 활성-백업을 선택하고 svc IP를 활성 loxilb 노드에 구성할 수 있습니다.
+  *  <b>"--setLBMode=1" -</b> 이 옵션을 사용하면 kube-loxilb가 엔드포인트를 향한 One-arm 모드에서 svc를 구성할 수 있습니다.
+  *  <b>"--setBGP=65100" -</b> 이 옵션을 사용하면 kube-loxilb가 BGP 인스턴스에 로컬 AS 번호를 구성할 수 있습니다.
+  *  <b>"--extBGPPeers=50.50.50.1:65101" -</b> 이 옵션을 사용하면 BGP 인스턴스의 외부 이웃을 구성할 수 있습니다.</p>
+<p>샘플 kube-loxilb.yaml은 <a href="https://github.com/loxilb-io/kube-loxilb/blob/main/manifest/in-cluster/kube-loxilb.yaml">여기</a>에서 찾을 수 있습니다.</p>
+<h3 id="loxilb_1">loxilb의 역할과 책임:</h3>
+<ul>
+<li>상태(활성 또는 백업)에 따라 SVC IP를 광고합니다.</li>
+<li>svc로 향하는 외부 트래픽을 추적하고 엔드포인트로 전달합니다.</li>
+<li>엔드포인트의 상태를 모니터링하고 활성 엔드포인트를 선택합니다(구성된 경우).</li>
+</ul>
+<h4 id="_8">구성 옵션</h4>
+<div class="highlight"><pre><span></span><code> containers:
+      - name: loxilb-app
+        image: &quot;ghcr.io/loxilb-io/loxilb:latest&quot;
+        imagePullPolicy: Always
+        command: [ &quot;/root/loxilb-io/loxilb/loxilb&quot;, &quot;--bgp&quot;, &quot;--egr-hooks&quot;, &quot;--blacklist=cni[0-9a-z]|veth.|flannel.&quot; ]
+        ports:
+        - containerPort: 11111
+        - containerPort: 179
+        - containerPort: 50051
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - SYS_ADMIN
+</code></pre></div>
+<ul>
+<li>
+<p><b>"--bgp" -</b> 옵션은 loxilb가 goBGP 인스턴스와 함께 실행되어 활성/백업 상태에 따라 적절한 우선순위로 경로를 광고할 수 있게 합니다.</p>
+</li>
+<li>
+<p><b>"--egr-hooks" -</b> 워크로드가 마스터 노드에 스케줄링될 수 있는 경우 필요합니다. 워커 노드로 워크로드 스케줄링을 관리하는 경우 이 인수를 언급할 필요는 없습니다.</p>
+</li>
+<li>
+<p><b>"--blacklist=cni[0-9a-z]|veth.|flannel." -</b> 클러스터 내 모드에서 실행하는 경우 필수입니다. loxilb는 모든 인터페이스에 ebpf 프로그램을 부착하지만 기본 네임스페이스에서 실행 중이므로 모든 인터페이스(CNI 인터페이스 포함)가 노출되고 loxilb는 이러한 인터페이스에 ebpf 프로그램을 부착하게 됩니다. 이는 원하는 바가 아니므로 사용자는 이러한 인터페이스를 제외하는 정규 표현식을 언급해야 합니다. 주어진 예제의 정규 표현식은 flannel 인터페이스를 제외합니다. "--blacklist=cali.|tunl.|vxlan[.]calico|veth.|cni[0-9a-z]" 정규 표현식은 calico CNI와 함께 사용해야 합니다.</p>
+</li>
+</ul>
+<p>샘플 loxilb.yaml은 <a href="https://github.com/loxilb-io/kube-loxilb/blob/main/manifest/in-cluster/loxilb.yaml">여기</a>에서 찾을 수 있습니다.</p>
+<h3 id="fail-over_1">Fail-over</h3>
+<p>이 다이어그램은 Fail-over 시나리오를 설명합니다:</p>
+<p><img alt="설정" src="../photos/loxilb-k8s-arch-LoxiLB-HA-L3-2.drawio.svg" /></p>
+<p>kube-loxilb는 loxilb의 상태를 지속적으로 모니터링합니다. 장애가 발생하면 loxilb의 상태 변경을 감지하고 사용 가능한 loxilb pod 풀에서 새로운 “활성”을 할당합니다. 새로운 pod는 이전에 다른 loxilb pod에 할당된 svcIP를 상속받아 새 상태에 따라 SVC IP를 광고합니다. 클라이언트는 SVCIP에 대한 새로운 경로를 수신하고 서비스는 새로 활성화된 loxilb pod에 의해 제공됩니다.</p>
+<h2 id="3-l3-bgp-ecmp-">시나리오 3 - L3 네트워크 (BGP ECMP를 사용하는 액티브-액티브)</h2>
+<h3 id="_9">설정</h3>
+<hr />
+<p>이 배포 시나리오에서는 Kubernetes와 loxilb가 다음과 같이 설정됩니다:</p>
+<p><img alt="설정" src="../photos/loxilb-k8s-arch-LoxiLB-HA-L3-ECMP.drawio.svg" /></p>
+<p>Kubernetes는 2개의 마스터 노드와 2개의 워커 노드로 구성된 클러스터를 사용하며, 모든 노드는 동일한 192.168.80.0/24 서브넷을 사용합니다. SVC는 클러스터/로컬 서브넷이 아닌 외부 IP를 가집니다.
+이 시나리오에서는 loxilb가 모든 마스터 노드에서 DaemonSet으로 배포됩니다.
+그리고 kube-loxilb는 Deployment로 배포됩니다.</p>
+<h3 id="_10">적합한 사용 사례</h3>
+<ol>
+<li>클라이언트와 클러스터가 다른 서브넷에 있는 경우.</li>
+<li>클라이언트와 svc VIP가 다른 서브넷에 있어야 하는 경우(클러스터 엔드포인트도 다른 네트워크에 있을 수 있음).</li>
+<li>클라우드 배포에 이상적입니다.</li>
+<li>액티브-액티브 클러스터링으로 인해 더 나은 성능이 필요하지만 네트워크 장치/호스트가 ECMP를 지원해야 합니다.</li>
+</ol>
+<h3 id="kube-loxilb_2">kube-loxilb의 역할과 책임:</h3>
+<ul>
+<li>다른 서브넷에서 CIDR을 선택합니다.</li>
+<li>이 경우 SetRoles 옵션을 선택하지 마세요(svcIP가 동일한 attributes/prio/med 로 광고됩니다).</li>
+<li>loxilb Pod 간의 BGP 피어링 프로비저닝을 자동화합니다.</li>
+<li>엔드포인트를 향한 One-arm 서비스 모드에서 loxilb를 설정합니다.</li>
+</ul>
+<h4 id="_11">구성 옵션</h4>
+<div class="highlight"><pre><span></span><code> containers:
+      - name: kube-loxilb
+        image: ghcr.io/loxilb-io/kube-loxilb:latest
+        imagePullPolicy: Always
+        command:
+        - /bin/kube-loxilb
+        args:
+        ....
+        ....
+        - --externalCIDR=123.123.123.1/24
+        - --setLBMode=1
+        - --setBGP=65100
+        - --extBGPPeers=50.50.50.1:65101
+</code></pre></div>
+<ul>
+<li><b>"--externalCIDR=123.123.123.1/24" -</b> svc의 외부 서비스 IP는 externalCIDR 범위에서 선택됩니다. 이 시나리오에서는 클라이언트, svc 및 클러스터가 모두 다른 서브넷에 있습니다.</li>
+<li><b>"--setLBMode=1" -</b> 이 옵션을 사용하면 kube-loxilb가 엔드포인트를 향한 One-arm 모드에서 svc를 구성할 수 있습니다.</li>
+<li><b>"--setBGP=65100" -</b> 이 옵션을 사용하면 kube-loxilb가 BGP 인스턴스에 로컬 AS 번호를 구성할 수 있습니다.</li>
+<li><b>"--extBGPPeers=50.50.50.1:65101" -</b> 이 옵션을 사용하면 BGP 인스턴스의 외부 이웃을 구성할 수 있습니다.</li>
+</ul>
+<p>샘플 kube-loxilb.yaml은 <a href="https://github.com/loxilb-io/kube-loxilb/blob/main/manifest/in-cluster/kube-loxilb.yaml">여기</a>에서 찾을 수 있습니다.</p>
+<h3 id="loxilb_2">loxilb의 역할과 책임:</h3>
+<ul>
+<li>동일한 속성으로 SVC IP를 광고합니다.</li>
+<li>svc로 향하는 외부 트래픽을 추적하고 엔드포인트로 전달합니다.</li>
+<li>엔드포인트의 상태를 모니터링하고 활성 엔드포인트를 선택합니다(구성된 경우).</li>
+</ul>
+<h4 id="_12">구성 옵션</h4>
+<div class="highlight"><pre><span></span><code> containers:
+      - name: loxilb-app
+        image: &quot;ghcr.io/loxilb-io/loxilb:latest&quot;
+        imagePullPolicy: Always
+        command: [ &quot;/root/loxilb-io/loxilb/loxilb&quot;, &quot;--bgp&quot;, &quot;--egr-hooks&quot;, &quot;--blacklist=cni[0-9a-z]|veth.|flannel.&quot; ]
+        ports:
+        - containerPort: 11111
+        - containerPort: 179
+        - containerPort: 50051
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - SYS_ADMIN
+</code></pre></div>
+<ul>
+<li>
+<p><b>"--bgp" -</b> 옵션은 loxilb가 동일한 속성으로 경로를 광고할 수 있게 합니다.</p>
+</li>
+<li>
+<p><b>"--egr-hooks" -</b> 워크로드가 마스터 노드에 스케줄링될 수 있는 경우 필요합니다. 워커 노드로 워크로드 스케줄링을 관리하는 경우 이 인수를 언급할 필요는 없습니다.</p>
+</li>
+<li>
+<p><b>"--blacklist=cni[0-9a-z]|veth.|flannel." -</b> 클러스터 내 모드에서 실행하는 경우 필수입니다. loxilb는 모든 인터페이스에 ebpf 프로그램을 부착하지만 기본 네임스페이스에서 실행 중이므로 모든 인터페이스(CNI 인터페이스 포함)가 노출되고 loxilb는 이러한 인터페이스에 ebpf 프로그램을 부착하게 됩니다. 이는 원하는 바가 아니므로 사용자는 이러한 인터페이스를 제외하는 정규 표현식을 언급해야 합니다. 주어진 예제의 정규 표현식은 flannel 인터페이스를 제외합니다. "--blacklist=cali.|tunl.|vxlan[.]calico|veth.|cni[0-9a-z]" 정규 표현식은 calico CNI와 함께 사용해야 합니다.</p>
+</li>
+</ul>
+<p>샘플 loxilb.yaml은 <a href="https://github.com/loxilb-io/kube-loxilb/blob/main/manifest/in-cluster/loxilb.yaml">여기</a>에서 찾을 수 있습니다.</p>
+<h3 id="fail-over_2">Fail-over</h3>
+<p>이 다이어그램은 Fail-over 시나리오를 설명합니다:</p>
+<p><img alt="설정" src="../photos/loxilb-k8s-arch-LoxiLB-HA-L3-ECMP-2.drawio.svg" /></p>
+<p>장애가 발생한 경우, 클라이언트에서 실행 중인 BGP는 ECMP 경로를 업데이트하고 트래픽을 활성 ECMP 엔드포인트로 보내기 시작합니다.</p>
+<h2 id="4-">시나리오 4 - 연결 동기화를 사용하는 액티브-백업</h2>
+<h3 id="_13">설정</h3>
+<hr />
+<p>이 배포 시나리오에서는 Kubernetes와 loxilb가 다음과 같이 설정됩니다:</p>
+<p><img alt="설정" src="../photos/loxilb-k8s-arch-LoxiLB-HA-CT-Sync-1.drawio.svg" /></p>
+<p>이 기능은 loxilb가 기본 모드 또는 Full NAT 모드에서 Kubernetes 클러스터 외부에서 실행될 때만 지원됩니다. Kubernetes는 2개의 마스터 노드와 2개의 워커 노드로 구성된 클러스터를 사용하며, 모든 노드는 동일한 192.168.80.0/24 서브넷을 사용합니다. SVC는 외부 IP를 가집니다.</p>
+<p>외부 클라이언트, loxilb 및 Kubernetes 클러스터의 연결에 따라 몇 가지 가능한 시나리오가 있습니다. 이 시나리오에서는 L3 연결을 고려합니다.</p>
+<h3 id="_14">적합한 사용 사례</h3>
+<ol>
+<li>loxilb pod 장애 시 장기 실행 연결을 유지해야 하는 경우</li>
+<li>DSR 모드로 알려진 다른 LB 모드를 사용하여 연결을 유지할 수 있지만 다음과 같은 제한 사항이 있습니다:<ol>
+<li>상태 기반 필터링 및 연결 추적을 보장할 수 없습니다.</li>
+<li>멀티호밍 기능을 지원할 수 없습니다. 다른 5-튜플이 동일한 연결에 속할 수 있기 때문입니다.</li>
+</ol>
+</li>
+</ol>
+<h3 id="kube-loxilb_3">kube-loxilb의 역할과 책임:</h3>
+<ul>
+<li>필요한 대로 CIDR을 선택합니다.</li>
+<li>SetRoles 옵션을 선택하여 활성 loxilb를 선택할 수 있도록 합니다(svcIP가 다른 attributes/prio/med 로 광고됩니다).</li>
+<li>loxilb 컨테이너 간의 BGP 피어링 프로비저닝을 자동화합니다(필요한 경우).</li>
+<li>엔드포인트를 향한 Full NAT 서비스 모드에서 loxilb를 설정합니다.</li>
+</ul>
+<h4 id="_15">구성 옵션</h4>
+<div class="highlight"><pre><span></span><code> containers:
+      - name: kube-loxilb
+        image: ghcr.io/loxilb-io/kube-loxilb:latest
+        imagePullPolicy: Always
+        command:
+        - /bin/kube-loxilb
+        args:
+        ....
+        ....
+        - --setRoles=0.0.0.0
+        - --loxiURL=http://192.168.80.1:11111,http://192.168.80.2:11111
+        - --externalCIDR=123.123.123.1/24
+        - --setLBMode=2
+        - --setBGP=65100
+        - --extBGPPeers=50.50.50.1:65101
+</code></pre></div>
+<ul>
+<li><b>"--setRoles=0.0.0.0" -</b> 이 옵션을 사용하면 kube-loxilb가 loxilb 인스턴스 중에서 활성-백업을 선택할 수 있습니다.</li>
+<li><b>"--loxiURL=http://192.168.80.1:11111,http://192.168.80.2:11111" -</b> 연결할 loxilb URL입니다.</li>
+<li><b>"--externalCIDR=123.123.123.1/24" -</b> svc의 외부 서비스 IP는 externalCIDR 범위에서 선택됩니다. 이 시나리오에서는 클라이언트, svc 및 클러스터가 모두 다른 서브넷에 있습니다.</li>
+<li><b>"--setLBMode=2" -</b> 이 옵션을 사용하면 kube-loxilb가 엔드포인트를 향한 Full NAT 모드에서 svc를 구성할 수 있습니다.</li>
+<li><b>"--setBGP=65100" -</b> 이 옵션을 사용하면 kube-loxilb가 BGP 인스턴스에 로컬 AS 번호를 구성할 수 있습니다.</li>
+<li><b>"--extBGPPeers=50.50.50.1:65101" -</b> 이 옵션을 사용하면 BGP 인스턴스의 외부 이웃을 구성할 수 있습니다.</li>
+</ul>
+<p>샘플 kube-loxilb.yaml은 <a href="https://github.com/loxilb-io/kube-loxilb/blob/main/manifest/ext-cluster/kube-loxilb.yaml">여기</a>에서 찾을 수 있습니다.</p>
+<h3 id="loxilb_3">loxilb의 역할과 책임:</h3>
+<ul>
+<li>상태(활성/백업)에 따라 SVC IP를 광고합니다.</li>
+<li>svc로 향하는 외부 트래픽을 추적하고 엔드포인트로 전달합니다.</li>
+<li>엔드포인트의 상태를 모니터링하고 활성 엔드포인트를 선택합니다(구성된 경우).</li>
+<li>장기 실행 연결을 다른 구성된 loxilb 피어와 동기화합니다.</li>
+</ul>
+<h4 id="_16">실행 옵션</h4>
+<div class="highlight"><pre><span></span><code>#llb1
+ docker run -u root --cap-add SYS_ADMIN   --restart unless-stopped --privileged -dit -v /dev/log:/dev/log --name loxilb ghcr.io/loxilb-io/loxilb:latest  --cluster=$llb2IP --self=0 -b
 
-<p>In Kubernetes, there are two key concepts - <b><i>Service and Endpoint</b></i>.</p>
-<h2 id="what-is-service">What is Service?</h2>
-<p>A <b><i>"Service"</i></b> is a method that exposes an application running in one or more pods.</p>
-<h2 id="what-is-an-endpoint">What is an Endpoint?</h2>
-<p>An <b><i>"Endpoint"</b></i> defines a list of network endpoints(IP address and port), typically referenced by a Service to define which Pods the traffic can be sent to.</p>
-<p>When we create a service in Kubernetes, usually we do not have to worry about the Endpoints' management as it is taken care by Kubernetes itself. But, sometimes not all the services run in a single cluster, some of them are hosted in other cluster(s) e.g. DB, storage, web services, trancoder etc. </p>
-<p>When endpoints are outside of the Kubernetes cluster, Endpoint objects can still be used to define and manage those external endpoints. This scenario is common when Kubernetes services need to interact with external systems, APIs, or services located outside of the cluster. Here's a practical example:</p>
-<p>Suppose you have a Kubernetes cluster hosting a microservices-based application, and one of the services needs to communicate with an external database hosted outside of the cluster. In this case, you can use an Endpoint object to define the external database endpoint within Kubernetes.
-In that case, your cloud-native apps needs to connect to the external services with external endpoints.</p>
-<p><img alt="External Endpoint" src="../photos/ext-ep-gen.png" /></p>
-<h2 id="service-with-external-endpoint">Service with External Endpoint</h2>
-<p>You can create an external service with loxilb as well. For this, You can simply create an Endpoint Object and then create a service using this endpoint object:</p>
-<p><img alt="External Endpoint with LoxiLB" src="../photos/ext-ep.png" /></p>
-<p><b>endpoint.yml</b>
-<div class="highlight"><pre><span></span><code>apiVersion: v1
-kind: Endpoints
-metadata:
-  name: ext-tcp-lb
-subsets:
-  - addresses:
-    - ip: 192.168.82.2
-    ports:
-    - port: 80
-</code></pre></div></p>
-<p>Create endpoint object:
-<div class="highlight"><pre><span></span><code>$ kubectl apply -f endpoint.yml
-</code></pre></div></p>
-<p>View endpoints:
-<div class="highlight"><pre><span></span><code>$ kubectl get ep
-NAME         ENDPOINTS         AGE
-kubernetes   10.0.2.15:6443    16m
-ext-tcp-lb   192.168.82.2:80   16m
-</code></pre></div></p>
-<p><b>service.yml</b>
-<div class="highlight"><pre><span></span><code>apiVersion: v1
-kind: Service
-metadata:
-  name: ext-tcp-lb
-spec:
- loadBalancerClass: loxilb.io/loxilb
- type: LoadBalancer 
- ports:
-    - protocol: TCP
-      port: 8000
-      targetPort: 80
-</code></pre></div></p>
-<p>Create Service:
-<div class="highlight"><pre><span></span><code>$ kubectl apply -f service.yml
-</code></pre></div></p>
-<p>View Service:
-<div class="highlight"><pre><span></span><code>NAME         TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)           AGE
-kubernetes   ClusterIP      10.43.0.1       &lt;none&gt;           443/TCP           16m
-ext-tcp-lb   LoadBalancer   10.43.164.108   llb-20.20.20.1   8000:30355/TCP    15m
-</code></pre></div></p>
+#llb2
+ docker run -u root --cap-add SYS_ADMIN   --restart unless-stopped --privileged -dit -v /dev/log:/dev/log --name loxilb ghcr.io/loxilb-io/loxilb:latest --cluster=$llb1IP --self=1 -b
+</code></pre></div>
+<ul>
+<li><b>"--cluster=\&lt;llb-peer-IP&gt;" -</b> 옵션은 동기화를 위한 피어 loxilb IP를 구성합니다.</li>
+<li><b>"--self=0/1" -</b> 옵션은 인스턴스를 식별합니다.</li>
+<li><b>"-b" -</b> 옵션은 loxilb가 활성/백업 상태에 따라 적절한 우선순위로 경로를 광고할 수 있도록 goBGP 인스턴스와 함께 실행되도록 합니다.</li>
+</ul>
+<h3 id="fail-over_3">Fail-over</h3>
+<p>이 다이어그램은 Fail-over 시나리오를 설명합니다:</p>
+<p><img alt="설정" src="../photos/loxilb-k8s-arch-LoxiLB-HA-CT-Sync-2.drawio.svg" /></p>
+<p>장애가 발생하면 kube-loxilb는 장애를 감지합니다. 활성 loxilb 풀에서 새로운 loxilb를 선택하고 이를 새로운 마스터로 업데이트합니다. 새로운 마스터 loxilb는 높은 우선순위로 svcIP를 광고하여 클라이언트에서 실행 중인 BGP가 트래픽을 새로운 마스터 loxilb로 보내도록 강제합니다. 연결이 모두 동기화되어 있으므로 새로운 마스터 loxilb는 지정된 엔드포인트로 트래픽을 보내기 시작합니다.</p>
+<p>이 기능에 대해 자세히 알아보려면 <a href="https://www.loxilb.io/post/k8s-deploying-hitless-and-ha-load-balancing">"Hitless HA"</a> 블로그를 읽어보세요.</p>
+<h2 id="5-fail-over-">시나리오 5 - 빠른 Fail-over 감지를 사용하는 액티브-백업</h2>
+<h3 id="_17">설정</h3>
+<hr />
+<p>이 배포 시나리오에서는 Kubernetes와 loxilb가 다음과 같이 설정됩니다:</p>
+<p><img alt="설정" src="../photos/bfd-1.svg" /></p>
+<p>이 기능은 loxilb가 Kubernetes 클러스터 외부에서 실행될 때만 지원됩니다. Kubernetes는 2개의 마스터 노드와 2개의 워커 노드로 구성된 클러스터를 사용하며, 모든 노드는 동일한 192.168.80.0/24 서브넷을 사용합니다. SVC는 외부 IP를 가집니다.</p>
+<p>외부 클라이언트, loxilb 및 Kubernetes 클러스터의 연결에 따라 몇 가지 가능한 시나리오가 있습니다. 이 시나리오에서는 연결 동기화와 함께 L2 연결을 고려합니다.</p>
+<h3 id="_18">적합한 사용 사례</h3>
+<ol>
+<li>빠른 Fail-over 감지 및 서비스 연속성이 필요한 경우.</li>
+<li>이 기능은 L2 또는 L3 네트워크 설정에서 모두 작동합니다.</li>
+</ol>
+<h3 id="kube-loxilb_4">kube-loxilb의 역할과 책임:</h3>
+<ul>
+<li>필요한 대로 CIDR을 선택합니다.</li>
+<li>SetRoles 옵션을 비활성화하여 활성 loxilb를 선택하지 않도록 합니다.</li>
+<li>loxilb 컨테이너 간의 BGP 피어링 프로비저닝을 자동화합니다(필요한 경우).</li>
+<li>엔드포인트를 향한 구성된 서비스 모드에서 loxilb를 설정합니다.</li>
+</ul>
+<h4 id="_19">구성 옵션</h4>
+<div class="highlight"><pre><span></span><code> containers:
+      - name: kube-loxilb
+        image: ghcr.io/loxilb-io/kube-loxilb:latest
+        imagePullPolicy: Always
+        command:
+        - /bin/kube-loxilb
+        args:
+        ....
+        ....
+        # Disable setRoles option
+        #- --setRoles=0.0.0.0
+        - --loxiURL=http://192.168.80.1:11111,http://192.168.80.2:11111
+        - --externalCIDR=192.168.80.5/32
+        - --setLBMode=2
+</code></pre></div>
+<ul>
+<li><b>"--setRoles=0.0.0.0" -</b> SetRoles 옵션을 비활성화해야 합니다. 이 옵션을 활성화하면 kube-loxilb가 loxilb 인스턴스 중에서 활성-백업을 선택하게 됩니다.</li>
+<li><b>"--loxiURL=http://192.168.80.1:11111,http://192.168.80.2:11111" -</b> 연결할 loxilb URL입니다.</li>
+<li><b>"--externalCIDR=192.168.80.5/32" -</b> svc의 외부 서비스 IP는 externalCIDR 범위에서 선택됩니다. 이 시나리오에서는 클라이언트, svc 및 클러스터가 모두 동일한 서브넷에 있습니다.</li>
+<li><b>"--setLBMode=2" -</b> 이 옵션을 사용하면 kube-loxilb가 엔드포인트를 향한 Full NAT 모드에서 svc를 구성할 수 있습니다.</li>
+</ul>
+<p>샘플 kube-loxilb.yaml은 <a href="https://github.com/loxilb-io/kube-loxilb/blob/main/manifest/ext-cluster/kube-loxilb.yaml">여기</a>에서 찾을 수 있습니다.</p>
+<h3 id="loxilb_4">loxilb의 역할과 책임:</h3>
+<ul>
+<li>상태(활성/백업)에 따라 SVC IP를 광고합니다.</li>
+<li>svc로 향하는 외부 트래픽을 추적하고 엔드포인트로 전달합니다.</li>
+<li>엔드포인트의 상태를 모니터링하고 활성 엔드포인트를 선택합니다(구성된 경우).</li>
+<li>장기 실행 연결을 다른 구성된 loxilb 피어와 동기화합니다.</li>
+</ul>
+<h4 id="_20">실행 옵션</h4>
+<div class="highlight"><pre><span></span><code>#llb1
+ docker run -u root --cap-add SYS_ADMIN   --restart unless-stopped --privileged -dit -v /dev/log:/dev/log --name loxilb ghcr.io/loxilb-io/loxilb:latest  --cluster=192.168.80.2 --self=0 --ka=192.168.80.2:192.168.80.1
+
+#llb2
+ docker run -u root --cap-add SYS_ADMIN   --restart unless-stopped --privileged -dit -v /dev/log:/dev/log --name loxilb ghcr.io/loxilb-io/loxilb:latest --cluster=192.168.80.1 --self=1 --ka=192.168.80.1:192.168.80.2
+</code></pre></div>
+<ul>
+<li><b>"--ka=\&lt;llb-peer-IP&gt;:\&lt;llb-self-IP&gt;" -</b> 옵션은 BFD를 위한 피어 loxilb IP와 소스 IP를 구성합니다.</li>
+<li><b>"--cluster=\&lt;llb-peer-IP&gt;" -</b> 옵션은 동기화를 위한 피어 loxilb IP를 구성합니다.</li>
+<li><b>"--self=0/1" -</b> 옵션은 인스턴스를 식별합니다.</li>
+</ul>
+<h3 id="fail-over_4">Fail-over</h3>
+<p>이 다이어그램은 Fail-over 시나리오를 설명합니다:</p>
+<p><img alt="설정" src="../photos/bfd-2.svg" /></p>
+<p>장애가 발생하면 BFD가 장애를 감지합니다. 백업 loxilb는 새로운 마스터로 상태를 업데이트합니다. 새로운 마스터 loxilb는 gARP 또는 BGP를 실행 중인 경우 더 높은 우선순위로 svcIP를 광고하여 클라이언트가 트래픽을 새로운 마스터 loxilb로 보내도록 강제합니다. 연결이 모두 동기화되어 있으므로 새로운 마스터 loxilb는 지정된 엔드포인트로 트래픽을 보내기 시작합니다.</p>
+<p>이 기능에 대해 자세히 알아보려면 <a href="https://www.loxilb.io/post/bringing-sub-second-resilience-in-kubernetes-cluster">"Fast Failover Detection with BFD"</a> 블로그를 읽어보세요.</p>
+<h2 id="_21">참고:</h2>
+<p>loxilb를 DSR 모드, DNS 등에서 사용하는 방법은 이 문서에서 자세히 다루지 않았습니다. 시나리오를 계속 업데이트할 예정입니다.</p>
 
 
 
@@ -2009,44 +2703,6 @@ ext-tcp-lb   LoadBalancer   10.43.164.108   llb-20.20.20.1   8000:30355/TCP    1
       
         <footer class="md-footer">
   
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../service-zones/" class="md-footer__link md-footer__link--prev" aria-label="Previous: How-To - service-group zones">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                How-To - service-group zones
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../k3s-multi-master/" class="md-footer__link md-footer__link--next" aria-label="Next: How-To - Deploy multi-server K3s HA with loxilb">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                How-To - Deploy multi-server K3s HA with loxilb
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   
   <div class="md-footer-meta md-typeset">
