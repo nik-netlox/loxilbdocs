@@ -22,4 +22,5 @@ jobs:
         run: |
             mike delete ${{ env.version }}
             mike deploy ${{ env.version }} --push
-            #mike set-default ${{ env.version }}
+            mike deploy latest -u latest
+            mike set-default latest
