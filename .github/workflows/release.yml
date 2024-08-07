@@ -1,7 +1,7 @@
 name: LoxiLB-Rel-Docs 
 on:
   release:
-    types: published
+    types: [published]
     branches:
       - test
   workflow_dispatch:
@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v2
@@ -19,8 +19,5 @@ jobs:
         run: echo "version=$(curl --silent -m 10 --connect-timeout 5 "https://api.github.com/repos/loxilb-io/loxilb/releases/latest" | jq -r .name)" >> "$GITHUB_ENV"
       - name: Publish docs
         #run: mkdocs gh-deploy
-        run: |
-            #mike delete ${{ env.version }}
-            mike deploy ${{ env.version }} latest -u --push
-            mike deploy master --push
-            mike set-default master
+        run: mike deploy --push --update-aliases ${{ env.version }} latest
+            
