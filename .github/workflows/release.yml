@@ -20,7 +20,7 @@ jobs:
       - name: Publish docs
         #run: mkdocs gh-deploy
         run: |
-            mike delete ${{ env.version }}
-            mike deploy ${{ env.version }} --push
-            mike deploy latest -u latest
-            mike set-default latest
+            #mike delete ${{ env.version }}
+            mike deploy ${{ env.version }} latest -u --push
+            mike deploy master --push
+            mike set-default master
