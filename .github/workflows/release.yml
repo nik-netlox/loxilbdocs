@@ -21,6 +21,7 @@ jobs:
         #run: mkdocs gh-deploy
         run: |
           mike delete ${{ env.version }}
-          mike deploy --push --update-aliases ${{ env.version }} latest
-          mike set-default --push latest
+          mike delete master
+          mike deploy --push --update-aliases 0.9.6 latest
+          mike set-default --push master
             
